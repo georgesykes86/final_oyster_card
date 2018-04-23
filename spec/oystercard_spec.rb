@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   subject(:card) {Oystercard.new}
+  let(:station) { double :station }
 
   describe '#top_up' do
 
@@ -23,7 +24,7 @@ describe Oystercard do
 
     it 'deducts money from a card' do
       card.top_up(10)
-      card.touch_in
+      card.touch_in(station)
       card.touch_out
       expect(card.balance).to eq 9
     end
@@ -46,13 +47,19 @@ describe Oystercard do
 
     it 'touches in' do
       card.top_up(5)
-      card.touch_in
+      card.touch_in(station)
       expect(card).to be_in_journey
     end
 
     it 'raises error if balance is below minimum limit' do
       min_balance = Oystercard::MIN_BALANCE
-      expect { card.touch_in }.to raise_error "Minimum balance of #{min_balance} required"
+      expect { card.touch_in(station) }.to raise_error "Minimum balance of #{min_balance} required"
+    end
+
+    it 'saves entry station' do
+      card.top_up(5)
+      card.touch_in(station)
+      expect(card.entry_station).to eq station
     end
 
   end
@@ -61,7 +68,7 @@ describe Oystercard do
 
     it 'touches out' do
       card.top_up(5)
-      card.touch_in
+      card.touch_in(station)
       card.touch_out
       expect(card).to_not be_in_journey
     end
@@ -69,7 +76,7 @@ describe Oystercard do
     it 'deducts money' do
       min_fare = Oystercard::MIN_FARE
       card.top_up(5)
-      card.touch_in
+      card.touch_in(station)
       expect { card.touch_out }.to change { card.balance }.by(-min_fare)
     end
 

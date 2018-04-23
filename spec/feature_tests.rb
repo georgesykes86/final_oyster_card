@@ -32,7 +32,7 @@ def deduct
   p card
 end
 
-deduct
+#deduct
 
 def check_status
   card = Oystercard.new
@@ -54,7 +54,16 @@ def deduct_money_touch_out
   card.top_up(10)
   card.touch_in
   card.touch_out
-  p card 
+  p card
 end
 
 deduct_money_touch_out
+
+def entry_station
+  card = Oystercard.new
+  card.top_up(10)
+  card.touch_in
+  p card
+end
+
+entry_station

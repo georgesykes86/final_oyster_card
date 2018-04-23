@@ -23,4 +23,12 @@ def max_balance
   p card
 end
 
-max_balance
+#max_balance
+
+def deduct
+  card = Oystercard.new
+  card.top_up(10)
+  card.deduct(5)
+end
+
+deduct

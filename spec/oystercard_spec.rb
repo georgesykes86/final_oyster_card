@@ -37,8 +37,12 @@ describe Oystercard do
       expect(card.balance).to eq Oystercard::DEFAULT_BALANCE
     end
 
-    it 'set default in_journey status to false' do
+    it 'sets default in_journey status to false' do
       expect(card.in_journey?).to be_falsy
+    end
+
+    it 'sets default journey history to empty' do
+      expect(card.journeys).to eq []
     end
 
   end
@@ -86,6 +90,7 @@ describe Oystercard do
       card.touch_out
       expect(card.entry_station).to eq nil
     end
+
   end
 
 end

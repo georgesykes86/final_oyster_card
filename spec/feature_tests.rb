@@ -78,3 +78,21 @@ def entry_station_touch_out
 end
 
 entry_station_touch_out
+
+def default_journey_history
+  card = Oystercard.new
+  card.top_up(10)
+  card.touch_in('station')
+  card.touch_out('station2')
+  p card.journeys
+end
+
+default_journey_history
+
+# # hash with entry and exit station
+# def store_journey
+#
+#
+# end
+#
+# store_journey

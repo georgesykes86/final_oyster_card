@@ -68,3 +68,13 @@ def entry_station
 end
 
 entry_station
+
+def entry_station_touch_out
+  card = Oystercard.new
+  card.top_up(10)
+  card.touch_in('station')
+  card.touch_out
+  p card.entry_station
+end
+
+entry_station_touch_out

@@ -38,7 +38,7 @@ def check_status
   card = Oystercard.new
   p card.in_journey?
   p card.touch_in('station')
-  p card.touch_out
+  p card.touch_out('station2')
 end
 
 def min_amount
@@ -53,7 +53,7 @@ def deduct_money_touch_out
   card = Oystercard.new
   card.top_up(10)
   card.touch_in('station')
-  card.touch_out
+  card.touch_out('station2')
   p card
 end
 
@@ -73,7 +73,7 @@ def entry_station_touch_out
   card = Oystercard.new
   card.top_up(10)
   card.touch_in('station')
-  card.touch_out
+  card.touch_out('station2')
   p card.entry_station
 end
 
@@ -82,17 +82,18 @@ entry_station_touch_out
 def default_journey_history
   card = Oystercard.new
   card.top_up(10)
-  card.touch_in('station')
-  card.touch_out('station2')
   p card.journeys
 end
 
 default_journey_history
 
-# # hash with entry and exit station
-# def store_journey
-#
-#
-# end
-#
-# store_journey
+# hash with entry and exit station
+def store_journey
+  card = Oystercard.new
+  card.top_up(10)
+  card.touch_in('station')
+  card.touch_out('station2')
+  p card.journeys
+end
+
+store_journey

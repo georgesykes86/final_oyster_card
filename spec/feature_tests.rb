@@ -103,3 +103,11 @@ def create_station
 end
 
 create_station
+
+def create_journey
+  p Journey.new
+  # get complete? and fare 
+end
+
+# create new class Journey - start, finish, fare, complete?
+# fare method - penalty(6)/ minimum

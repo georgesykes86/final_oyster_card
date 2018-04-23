@@ -29,6 +29,12 @@ def deduct
   card = Oystercard.new
   card.top_up(10)
   card.deduct(5)
+  p card
 end
 
 deduct
+
+def check_status
+  card = Oystercard.new
+  p card.in_journey?
+end

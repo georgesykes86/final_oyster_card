@@ -97,3 +97,9 @@ def store_journey
 end
 
 store_journey
+
+def create_station
+  p Station.new(name, zone)
+end
+
+create_station

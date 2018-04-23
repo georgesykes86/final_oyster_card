@@ -27,14 +27,20 @@ describe Oystercard do
   end
 
   it 'touches in' do
+    card.top_up(5)
     card.touch_in
     expect(card).to be_in_journey
   end
 
   it 'touches out' do
+    card.top_up(5)
     card.touch_in
     card.touch_out
     expect(card).to_not be_in_journey
   end
 
+  it 'raises error if balance is below minimum limit' do
+    min_balance = Oystercard::MIN_BALANCE
+    expect { card.touch_in }.to raise_error "Minimum balance of #{min_balance} required"
+  end
 end

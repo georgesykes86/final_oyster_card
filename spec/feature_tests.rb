@@ -38,5 +38,13 @@ def check_status
   card = Oystercard.new
   p card.in_journey?
   p card.touch_in
-  p card.touch_out 
+  p card.touch_out
 end
+
+def min_amount
+  card = Oystercard.new
+  card.touch_in
+  p card
+end
+
+min_amount

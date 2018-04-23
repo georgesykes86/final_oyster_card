@@ -47,4 +47,14 @@ def min_amount
   p card
 end
 
-min_amount
+# min_amount
+
+def deduct_money_touch_out
+  card = Oystercard.new
+  card.top_up(10)
+  card.touch_in
+  card.touch_out
+  p card 
+end
+
+deduct_money_touch_out

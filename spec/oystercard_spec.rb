@@ -18,11 +18,14 @@ describe Oystercard do
 
   end
 
+  # Can be deleted
   describe '#deduct' do
 
     it 'deducts money from a card' do
       card.top_up(10)
-      expect(card.deduct(5)).to eq 5
+      card.touch_in
+      card.touch_out
+      expect(card.balance).to eq 9
     end
 
   end
@@ -61,6 +64,13 @@ describe Oystercard do
       card.touch_in
       card.touch_out
       expect(card).to_not be_in_journey
+    end
+
+    it 'deducts money' do
+      min_fare = Oystercard::MIN_FARE
+      card.top_up(5)
+      card.touch_in
+      expect { card.touch_out }.to change { card.balance }.by(-min_fare)
     end
 
   end

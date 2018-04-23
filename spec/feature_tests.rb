@@ -16,3 +16,11 @@ def top_up
 end
 
 top_up
+
+def max_balance
+  card = Oystercard.new
+  card.top_up(91)
+  p card
+end
+
+max_balance

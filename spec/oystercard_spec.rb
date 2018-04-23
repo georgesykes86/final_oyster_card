@@ -12,4 +12,8 @@ describe Oystercard do
     expect(card.balance).to eq 5
   end
 
+  it 'raises error if top up exceeds maximum balance' do
+    expect { card.top_up(91) }.to raise_error 'Maximum balance exceeded'
+  end
+
 end

@@ -23,7 +23,18 @@ describe Oystercard do
   end
 
   it 'set default in_journey status to false' do
-    expect(card.in_journey?).to eq false 
+    expect(card.in_journey?).to be_falsy
+  end
+
+  it 'touches in' do
+    card.touch_in
+    expect(card).to be_in_journey
+  end
+
+  it 'touches out' do
+    card.touch_in
+    card.touch_out
+    expect(card).to_not be_in_journey
   end
 
 end

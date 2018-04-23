@@ -37,4 +37,6 @@ deduct
 def check_status
   card = Oystercard.new
   p card.in_journey?
+  p card.touch_in
+  p card.touch_out 
 end

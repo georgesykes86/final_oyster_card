@@ -34,6 +34,7 @@ feature 'Oystercard Challenge', :feature do
 
   end
 
+  #Penalty fares
   context 'incomplete journey - no touch out' do
 
     let(:entry_station2) { Station.new('Clapham', 2) }
@@ -47,6 +48,28 @@ feature 'Oystercard Challenge', :feature do
       expect(oystercard.journeys.count).to eq 2
       expect(oystercard.journeys.last.entry_station).to be entry_station2
       expect(oystercard.journeys[-2]).to be_complete
+    end
+
+  end
+
+  context 'incomplete journey no touch in' do
+
+    let(:exit_station2) { Station.new('Notting Hill gate', 1) }
+
+    scenario 'First use is a touch out' do
+      oystercard.touch_out(exit_station2)
+      expect(oystercard.journeys.count).to eq 1
+      expect(oystercard.journeys.last).to be_complete
+      expect(oystercard.journeys.last.exit_station).to be exit_station2
+    end
+
+    scenario 'after a touch out' do
+      oystercard.touch_in(entry_station)
+      oystercard.touch_out(exit_station)
+      oystercard.touch_out(exit_station2)
+      expect(oystercard.journeys.count).to eq 2
+      expect(oystercard.journeys.last).to be_complete
+      expect(oystercard.journeys.last.exit_station).to be exit_station2
     end
 
   end

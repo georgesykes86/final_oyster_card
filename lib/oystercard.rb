@@ -3,7 +3,7 @@ class Oystercard
   DEFAULT_BALANCE = 0
   MAX_BALANCE = 90
   MIN_BALANCE = 1
-  MIN_FARE = 1
+
   attr_reader :balance, :entry_station, :journeys
 
   def initialize(balance: DEFAULT_BALANCE, journey_class: Journey)

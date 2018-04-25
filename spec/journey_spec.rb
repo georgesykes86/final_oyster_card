@@ -2,6 +2,7 @@ describe Journey do
 
   subject(:journey) {described_class.new}
   let(:station) { double :station }
+  let(:min_fare) { Journey::MIN_FARE }
 
   describe '#initialize' do
     context 'when no arguments are given' do
@@ -35,6 +36,18 @@ describe Journey do
         expect(journey.exit_station).to be station
       end
     end
+  end
+
+  describe '#fare' do
+
+    context 'given valid journey' do
+      it 'returns minimum fare' do
+          journey.set_complete(station)
+          expect(journey.fare).to eq min_fare
+      end
+
+    end
+
   end
 
 

@@ -129,15 +129,4 @@ describe Oystercard do
 
   end
 
-  describe '#journeys' do
-
-    it 'saves journey on touch out' do
-      pending("refactoring")
-      card.top_up(5)
-      card.touch_in(entry_station)
-      card.touch_out(exit_station)
-      expect(card.journeys).to eq [{entry: entry_station, exit: exit_station}]
-    end
-  end
-
 end

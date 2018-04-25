@@ -1,13 +1,13 @@
 # irb -r './spec/feature_tests.rb'
 
 require './lib/oystercard'
+require './lib/station'
+require './lib/journey'
 
 def set_balance
   card = Oystercard.new
   p card
 end
-
-set_balance
 
 def top_up
   card = Oystercard.new
@@ -15,30 +15,15 @@ def top_up
   p card
 end
 
-top_up
-
 def max_balance
   card = Oystercard.new
   card.top_up(91)
   p card
 end
 
-#max_balance
-
-def deduct
-  card = Oystercard.new
-  card.top_up(10)
-  card.deduct(5)
-  p card
-end
-
-#deduct
-
 def check_status
   card = Oystercard.new
-  p card.in_journey?
-  p card.touch_in('station')
-  p card.touch_out('station2')
+  p card
 end
 
 def min_amount
@@ -46,8 +31,6 @@ def min_amount
   card.touch_in('station')
   p card
 end
-
-# min_amount
 
 def deduct_money_touch_out
   card = Oystercard.new
@@ -57,35 +40,26 @@ def deduct_money_touch_out
   p card
 end
 
-deduct_money_touch_out
-
-
 def entry_station
   card = Oystercard.new
   card.top_up(10)
   card.touch_in('station')
-  p card.entry_station
+  p card
 end
-
-entry_station
 
 def entry_station_touch_out
   card = Oystercard.new
   card.top_up(10)
   card.touch_in('station')
   card.touch_out('station2')
-  p card.entry_station
+  p card
 end
-
-entry_station_touch_out
 
 def default_journey_history
   card = Oystercard.new
   card.top_up(10)
-  p card.journeys
+  p card
 end
-
-default_journey_history
 
 # hash with entry and exit station
 def store_journey
@@ -93,12 +67,23 @@ def store_journey
   card.top_up(10)
   card.touch_in('station')
   card.touch_out('station2')
-  p card.journeys
+  p card
 end
 
+set_balance
+top_up
+# max_balance
+check_status
+# min_amount
+deduct_money_touch_out
+entry_station
+entry_station_touch_out
+default_journey_history
 store_journey
 
 def create_station
+  name = 'Stratford'
+  zone = 3 
   p Station.new(name, zone)
 end
 
@@ -106,7 +91,7 @@ create_station
 
 def create_journey
   p Journey.new
-  # get complete? and fare 
+  # get complete? and fare
 end
 
 # create new class Journey - start, finish, fare, complete?

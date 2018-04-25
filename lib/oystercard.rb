@@ -30,15 +30,12 @@ class Oystercard
   end
 
   def touch_out(exit_station)
-
     if !in_journey?
       journey = create_journey
       save(journey)
-    end       
-
+    end
     current_journey.set_complete(exit_station)
     deduct(current_journey.fare)
-
   end
 
   private

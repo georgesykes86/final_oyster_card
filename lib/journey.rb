@@ -9,6 +9,7 @@ class Journey
   def initialize(entry_station = nil)
     @entry_station = entry_station
     @complete = false
+    @fare = 0
   end
 
   def complete?

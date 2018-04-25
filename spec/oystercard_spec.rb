@@ -103,6 +103,30 @@ describe Oystercard do
 
     end
 
+    context 'after touch out' do
+
+      before do
+        card.top_up(5)
+        allow(journey).to receive(:complete?).and_return(false)
+        allow(journey).to receive(:fare).and_return(fare)
+        card.touch_in(entry_station)
+        card.touch_out(exit_station)
+        allow(journey).to receive(:complete?).and_return(true)
+        allow(journey).to receive(:set_complete)
+
+      end
+
+      it 'saves journey' do
+        card.touch_out(exit_station)
+        expect(card.journeys.count).to eq 2
+      end
+
+      it 'deducts money' do
+        expect{card.touch_out(exit_station)}.to change{card.balance}.by(fare)
+      end
+
+    end
+
   end
 
   describe '#journeys' do

@@ -16,6 +16,4 @@ class Journey
     @complete = true
   end
 
-
-
 end

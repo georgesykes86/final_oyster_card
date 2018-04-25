@@ -31,5 +31,24 @@ feature 'Oystercard Challenge', :feature do
       expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by(-min_fare)
     end
 
+
   end
+
+  context 'incomplete journey - no touch out' do
+
+    let(:entry_station2) { Station.new('Clapham', 2) }
+    before do
+      oystercard.touch_in(entry_station)
+    end
+
+    scenario 'touch in again' do
+      oystercard.touch_in(entry_station2)
+      expect(oystercard).to be_in_journey
+      expect(oystercard.journeys.count).to eq 2
+      expect(oystercard.journeys.last.entry_station).to be entry_station2
+      expect(oystercard.journeys[-2]).to be_complete
+    end
+
+  end
+
 end

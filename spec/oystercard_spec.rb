@@ -55,6 +55,25 @@ describe Oystercard do
       expect { card.touch_in(entry_station) }.to raise_error "Minimum balance of #{min_balance} required"
     end
 
+    context 'after touch in' do
+
+      before do
+        card.top_up(5)
+        card.touch_in(entry_station)
+      end
+
+      it 'completes journey' do
+        expect(journey).to receive(:set_complete)
+        card.touch_in(entry_station)
+      end
+
+      it 'creates new journey' do
+        card.touch_in(entry_station)
+        expect(card.journeys.count).to eq 2
+      end
+
+    end
+
   end
 
   describe '#touch_out' do

@@ -8,7 +8,6 @@ class Oystercard
 
   def initialize(balance: DEFAULT_BALANCE, journey_class: Journey)
     @balance = balance
-    @entry_station = nil
     @journeys = []
     @journey_class = journey_class
   end

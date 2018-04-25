@@ -51,10 +51,19 @@ describe Journey do
     end
 
     context 'given invalid journey not touch out' do
-      let(:valid_journey) { Journey.new(station) }
+      let(:invalid_journey) { Journey.new(station) }
       it 'returns penalty fare' do
-        valid_journey.set_complete
-        expect(valid_journey.fare).to eq penalty_fare
+        invalid_journey.set_complete
+        expect(invalid_journey.fare).to eq penalty_fare
+      end
+
+    end
+
+    context 'given invalid journey no touch in' do
+
+      it 'returns a penalty fare' do
+        journey.set_complete(station)
+        expect(journey.fare).to eq penalty_fare
       end
 
     end

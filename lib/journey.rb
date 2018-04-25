@@ -12,6 +12,10 @@ class Journey
     @complete
   end
 
+  def set_complete
+    @complete = true
+  end
+
 
 
 end

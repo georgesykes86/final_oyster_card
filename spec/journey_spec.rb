@@ -23,4 +23,11 @@ fdescribe Journey do
     end
   end
 
+  describe '#set_complete' do
+    it 'completes a journey' do
+      expect { journey.set_complete }.to change{ journey.complete? }.from(false).to true
+    end
+  end
+
+
 end

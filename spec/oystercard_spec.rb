@@ -2,10 +2,17 @@
 
 describe Oystercard do
 
-  subject(:card) {described_class.new}
+  let(:min_fare) { Oystercard::MIN_FARE }
+  let(:max_balance) { Oystercard::MAX_BALANCE}
+  let(:default_balance) { Oystercard::DEFAULT_BALANCE }
+
+  subject(:card) {described_class.new(journey_class: journey_class)}
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
-  let(:journey) { instance_double :journey, complete?: false }
+  let(:journey_class) { double :journey_class }
+  before { allow(journey_class).to receive(:new).and_return(journey)}
+  let(:journey) { double :journey, complete?: false}
+  before { allow(journey).to receive(:set_complete)}
 
   describe '#top_up' do
 
@@ -15,7 +22,6 @@ describe Oystercard do
     end
 
     it 'raises error if top up exceeds maximum balance' do
-      max_balance = Oystercard::MAX_BALANCE
       expect { card.top_up(91) }.to raise_error "Maximum balance of #{max_balance} exceeded"
     end
 
@@ -24,7 +30,7 @@ describe Oystercard do
   describe '#initialize' do
 
     it 'sets a default balance to 0' do
-      expect(card.balance).to eq Oystercard::DEFAULT_BALANCE
+      expect(card.balance).to eq default_balance
     end
 
     it 'sets default in_journey status to false' do
@@ -54,25 +60,28 @@ describe Oystercard do
 
   describe '#touch_out' do
 
-    it 'touches out' do
-      card.top_up(5)
-      card.touch_in(entry_station)
-      card.touch_out(exit_station)
-      expect(card).to_not be_in_journey
-    end
+    context 'after touch in' do
 
-    it 'deducts money' do
-      min_fare = Oystercard::MIN_FARE
-      card.top_up(5)
-      card.touch_in(entry_station)
-      expect { card.touch_out(exit_station) }.to change { card.balance }.by(-min_fare)
-    end
+      before do
+        allow(journey).to receive(:complete?).and_return(true)
+        card.top_up(5)
+        card.touch_in(entry_station)
+      end
 
-    it 'completes a journey' do
-      card.top_up(5)
-      card.touch_in(entry_station)
-      card.touch_out(exit_station)
-      expect(card.in_journey?).to eq false
+      it 'touches out' do
+        card.touch_out(exit_station)
+        expect(card).to_not be_in_journey
+      end
+
+      it 'deducts money' do
+        expect { card.touch_out(exit_station) }.to change { card.balance }.by(-min_fare)
+      end
+
+      it 'completes a journey' do
+        card.touch_out(exit_station)
+        expect(card.in_journey?).to eq false
+      end
+
     end
 
   end

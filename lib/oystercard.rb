@@ -6,7 +6,7 @@ class Oystercard
   MIN_FARE = 1
   attr_reader :balance, :entry_station, :journeys
 
-  def initialize(balance = DEFAULT_BALANCE, journey_class = Journey)
+  def initialize(balance: DEFAULT_BALANCE, journey_class: Journey)
     @balance = balance
     @entry_station = nil
     @journeys = []

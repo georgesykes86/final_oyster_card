@@ -122,7 +122,7 @@ describe Oystercard do
       end
 
       it 'deducts money' do
-        expect{card.touch_out(exit_station)}.to change{card.balance}.by(fare)
+        expect{card.touch_out(exit_station)}.to change{card.balance}.by(-fare)
       end
 
     end

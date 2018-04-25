@@ -1,10 +1,10 @@
 
 
 describe Oystercard do
-
-  let(:min_fare) { Oystercard::MIN_FARE }
+  let(:fare) { 1 }
   let(:max_balance) { Oystercard::MAX_BALANCE}
   let(:default_balance) { Oystercard::DEFAULT_BALANCE }
+  let(:min_balance) { Oystercard::MIN_BALANCE }
 
   subject(:card) {described_class.new(journey_class: journey_class)}
   let(:entry_station) { double :entry_station }
@@ -52,7 +52,6 @@ describe Oystercard do
     end
 
     it 'raises error if balance is below minimum limit' do
-      min_balance = Oystercard::MIN_BALANCE
       expect { card.touch_in(entry_station) }.to raise_error "Minimum balance of #{min_balance} required"
     end
 
@@ -64,6 +63,7 @@ describe Oystercard do
 
       before do
         allow(journey).to receive(:complete?).and_return(true)
+        allow(journey).to receive(:fare).and_return(fare)
         card.top_up(5)
         card.touch_in(entry_station)
       end
@@ -74,7 +74,7 @@ describe Oystercard do
       end
 
       it 'deducts money' do
-        expect { card.touch_out(exit_station) }.to change { card.balance }.by(-min_fare)
+        expect { card.touch_out(exit_station) }.to change { card.balance }.by(-fare)
       end
 
       it 'completes a journey' do

@@ -3,7 +3,7 @@ feature 'Oystercard Challenge', :feature do
   let(:entry_station) { Station.new('Oxford Circus', 1) }
   let(:exit_station) { Station.new('Oxford Circus', 1) }
 
-  let(:min_fare) { Oystercard::MIN_FARE }
+  let(:min_fare) { Journey::MIN_FARE }
   let(:max_balance) { Oystercard::MAX_BALANCE}
   let(:default_balance) { Oystercard::DEFAULT_BALANCE }
 
@@ -28,7 +28,6 @@ feature 'Oystercard Challenge', :feature do
     end
 
     scenario 'deducts fare given valid journey' do
-      expect_any_instance_of(Journey).to receive(:fare).at_least(:once)
       expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by(-min_fare)
     end
 

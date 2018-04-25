@@ -1,3 +1,5 @@
+# require 'pry'
+# require 'pry-byebug'
 class Journey
 
   MIN_FARE = 1

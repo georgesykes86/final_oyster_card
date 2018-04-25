@@ -12,8 +12,13 @@ class Journey
     @complete
   end
 
-  def set_complete
+  def set_complete(station)
     @complete = true
+    set_exit_station(station)
+  end
+
+  def set_exit_station(station)
+    @exit_station = station
   end
 
 end

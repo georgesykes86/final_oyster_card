@@ -24,8 +24,16 @@ describe Journey do
   end
 
   describe '#set_complete' do
-    it 'completes a journey' do
-      expect { journey.set_complete }.to change{ journey.complete? }.from(false).to true
+
+    context 'given an exit station' do
+      it 'completes a journey' do
+        expect { journey.set_complete(station) }.to change{ journey.complete? }.from(false).to true
+      end
+
+      it 'sets the exit station' do
+        journey.set_complete(station)
+        expect(journey.exit_station).to be station
+      end
     end
   end
 

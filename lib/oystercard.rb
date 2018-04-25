@@ -30,7 +30,7 @@ class Oystercard
 
   def touch_out(exit_station)
     deduct(MIN_FARE)
-    current_journey.set_complete
+    current_journey.set_complete(exit_station)
   end
 
   private

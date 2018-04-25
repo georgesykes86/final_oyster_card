@@ -5,7 +5,7 @@ describe Oystercard do
   subject(:card) {described_class.new}
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
-  let(:journey) { double :journey, complete?: false }
+  let(:journey) { instance_double :journey, complete?: false }
 
   describe '#top_up' do
 
@@ -68,11 +68,11 @@ describe Oystercard do
       expect { card.touch_out(exit_station) }.to change { card.balance }.by(-min_fare)
     end
 
-    it '' do
+    it 'completes a journey' do
       card.top_up(5)
       card.touch_in(entry_station)
       card.touch_out(exit_station)
-      expect(card.entry_station).to eq nil
+      expect(card.in_journey?).to eq false
     end
 
   end

@@ -18,7 +18,7 @@ class Oystercard
   end
 
   def in_journey?
-    !!entry_station
+    !!current_journey && !current_journey.complete?
   end
 
   def touch_in(entry_station)
@@ -42,7 +42,7 @@ class Oystercard
     journeys << {entry: entry_station, exit: exit_station}
   end
 
-  def get_current_journey
+  def current_journey
     journeys.last
   end
 

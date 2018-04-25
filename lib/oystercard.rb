@@ -23,7 +23,7 @@ class Oystercard
 
   def touch_in(entry_station)
     fail "Minimum balance of #{MIN_BALANCE} required" if @balance < MIN_BALANCE
-    @entry_station = entry_station
+    @journeys << Journey.new(entry_station)
   end
 
   def touch_out(exit_station)
@@ -40,6 +40,10 @@ class Oystercard
 
   def save_journey(exit_station)
     journeys << {entry: entry_station, exit: exit_station}
+  end
+
+  def get_current_journey
+    journeys.last
   end
 
 end

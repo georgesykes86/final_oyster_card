@@ -1,16 +1,25 @@
-require 'journey'
-
-describe Journey do
+fdescribe Journey do
 
   subject(:journey) {described_class.new}
+  let(:station) { double :station }
 
   describe '#initialize' do
-    it 'sets returns default entry station (nil)' do
-      expect(journey.entry_station).to be_nil
+    context 'when no arguments are given' do
+      it 'sets returns default entry station (nil)' do
+        expect(journey.entry_station).to be_nil
+      end
+
+      it 'shows journey as not being complete by default' do
+        expect(journey).not_to be_complete
+      end
     end
 
-    it 'sets returns default exit station (nil)' do
-      expect(journey.exit_station).to be_nil
+    context 'when a station argument is given' do
+      let(:new_journey) {described_class.new(station)}
+
+      it 'sets the entry station to the station' do
+        expect(new_journey.entry_station).to be station
+      end
     end
   end
 

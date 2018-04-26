@@ -3,46 +3,54 @@ require_relative './station'
 require_relative './journey_log'
 
 class Oystercard
+  attr_reader :balance, :journey_log
 
   DEFAULT_BALANCE = 0
   MAX_BALANCE = 90
   MIN_BALANCE = 1
 
-  attr_reader :balance, :entry_station, :journeys
-
-  def initialize(balance: DEFAULT_BALANCE, journey_log: Journeylog.new)
-    @balance = balance
+  def initialize(journey_log = Journeylog.new)
+    @balance = DEFAULT_BALANCE
     @journey_log = journey_log
   end
 
-  def top_up(money)
-    fail "Maximum balance of #{MAX_BALANCE} exceeded" if (@balance + money) > MAX_BALANCE
-    @balance += money
-  end
-
   def in_journey?
-    @journey_log.in_journey?
+    journey_log.in_journey?
   end
 
   def touch_in(entry_station)
-    fail "Minimum balance of #{MIN_BALANCE} required" if @balance < MIN_BALANCE
-    @journey_log.start(entry_station)
+    raise 'Minimum card balance required' if insufficient_funds?
+    journey_log.start(entry_station)
     deduct(get_fare)
   end
 
   def touch_out(exit_station)
-    @journey_log.finish(exit_station)
+    journey_log.finish(exit_station)
     deduct(get_fare)
+  end
+
+  def top_up(value)
+    raise "Maximum limit of £#{MAX_BALANCE} exceeded" if exceeds_max_balance?
+    @balance += value
   end
 
   private
 
-  def deduct(money)
-    @balance -= money
+  def deduct(value)
+    raise 'Invalid amount' if value < 0
+    @balance -= value
   end
 
   def get_fare
     journey_log.fare
+  end
+
+  def insufficient_funds?
+    @balance < MIN_BALANCE
+  end
+
+  def exceeds_max_balance?
+    @balance + value > MAX_BALANCE
   end
 
 end

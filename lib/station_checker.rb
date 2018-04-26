@@ -1,4 +1,6 @@
 require 'csv'
+require 'pry'
+require 'pry-byebug'
 
 class Stationchecker
 
@@ -12,7 +14,7 @@ class Stationchecker
       station = line[0]
       similar_names << station if match?(name, station)
     end
-
+    similar_names
   end
 
   def check_zone(name)
@@ -20,26 +22,28 @@ class Stationchecker
       station, zone = line
       return zone.to_i if station == name
     end
-    raise "Station not recognized did you mean?\n #{print_similar_names}"
+    raise "Station not recognized did you mean?\n#{print_similar_names(name)}"
   end
 
-  def match?(name)
+  def match?(name, station)
     regexs = create_matchers(name)
     regexs.each do |matcher|
-      regex = /\b#{Regex.quote(matcher)}/
+      regex = /\b#{Regexp.quote(matcher)}/
       return true if regex.match(station)
     end
     false
   end
 
   def create_matchers(name)
-    [name[0..3], name[0..2], name[0..1], name[0]]
+    [name[0..3], name[0..2], name[0..1]]
   end
 
   def print_similar_names(name)
-    get.similar_names(name).each_slice(3) do |slice|
-      puts slice.join("    ")
+    sliced = ""
+    get_similar_names(name).each_slice(3) do |slice|
+      sliced << slice.join("    ") + "\n"
     end
+    sliced
   end
 
 end

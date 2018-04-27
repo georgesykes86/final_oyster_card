@@ -1,6 +1,4 @@
 require 'csv'
-require 'pry'
-require 'pry-byebug'
 
 class Stationchecker
 

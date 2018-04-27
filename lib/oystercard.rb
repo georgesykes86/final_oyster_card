@@ -3,7 +3,7 @@ require_relative './station'
 require_relative './journey_log'
 
 class Oystercard
-  attr_reader :balance, :journey_log
+  attr_reader :balance
 
   DEFAULT_BALANCE = 0
   MAX_BALANCE = 90
@@ -30,11 +30,17 @@ class Oystercard
   end
 
   def top_up(value)
-    raise "Maximum limit of £#{MAX_BALANCE} exceeded" if exceeds_max_balance?
+    raise "Maximum limit of £#{MAX_BALANCE} exceeded" if exceeds_max_balance?(value)
     @balance += value
   end
 
+  def journeys
+    journey_log.journeys
+  end
+
   private
+
+  attr_reader :journey_log
 
   def deduct(value)
     raise 'Invalid amount' if value < 0
@@ -49,7 +55,7 @@ class Oystercard
     @balance < MIN_BALANCE
   end
 
-  def exceeds_max_balance?
+  def exceeds_max_balance?(value)
     @balance + value > MAX_BALANCE
   end
 

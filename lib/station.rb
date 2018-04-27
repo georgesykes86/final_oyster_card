@@ -1,5 +1,4 @@
-
-require_relative 'station_checker'
+require_relative './station_checker'
 
 class Station
 

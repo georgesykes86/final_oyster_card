@@ -1,4 +1,4 @@
-fdescribe Journey do
+describe Journey do
 
   subject(:journey) {described_class.new(nil)}
   let(:valid_journey) { Journey.new(station) }

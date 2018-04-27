@@ -21,12 +21,12 @@ class Oystercard
   def touch_in(entry_station)
     raise 'Minimum card balance required' if insufficient_funds?
     journey_log.start(entry_station)
-    deduct(get_fare)
+    deduct(charges)
   end
 
   def touch_out(exit_station)
     journey_log.finish(exit_station)
-    deduct(get_fare)
+    deduct(charges)
   end
 
   def top_up(value)
@@ -47,7 +47,7 @@ class Oystercard
     @balance -= value
   end
 
-  def get_fare
+  def charges
     journey_log.fare
   end
 

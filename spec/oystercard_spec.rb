@@ -9,10 +9,9 @@ describe Oystercard do
   subject(:card) {described_class.new(journey_class: journey_class)}
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
-  let(:journey_class) { double :journey_class }
   before { allow(journey_class).to receive(:new).and_return(journey)}
-  let(:journey) { double :journey, complete?: false}
-  before { allow(journey).to receive(:set_complete)}
+  let(:journey_log) { double :journey_log }
+
 
   describe '#top_up' do
 
@@ -31,14 +30,6 @@ describe Oystercard do
 
     it 'sets a default balance to 0' do
       expect(card.balance).to eq default_balance
-    end
-
-    it 'sets default in_journey status to false' do
-      expect(card.in_journey?).to be false
-    end
-
-    it 'sets default journey history to empty' do
-      expect(card.journeys).to eq []
     end
 
   end
